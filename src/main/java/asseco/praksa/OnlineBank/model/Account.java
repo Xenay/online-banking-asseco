@@ -9,7 +9,11 @@ public class Account {
     @Id // Marks this field as the primary key.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Configures the way the ID is generated.
     private Long id; // Adding an ID field to act as the primary key.
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
 
+    @Column(name = "password", nullable = false)
+    private String password;
     @Column(nullable = false, unique = true)
     private String accountNumber;
 
@@ -22,10 +26,11 @@ public class Account {
     // Constructors
     public Account() {}
 
-    public Account(String accountNumber, BigDecimal balance, String currency) {
+    public Account(String accountNumber, BigDecimal balance, String currency, String username) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.currency = currency;
+        this.username = username;
     }
 
     // Getters and setters
@@ -60,5 +65,21 @@ public class Account {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

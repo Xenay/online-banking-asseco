@@ -23,13 +23,14 @@ public class BankAccount {
     @Column(name = "minimum_balance")
     private BigDecimal minimumBalance;
 
+
     // Link to the User entity (assuming you have one)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    // Constructors, getters, and setters
-
+    @Column(name = "balance")
+    private BigDecimal balance; // Add this field for the current balance
     // Enum for account types
     public enum AccountType {
         CHECKING,
@@ -76,5 +77,13 @@ public class BankAccount {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
