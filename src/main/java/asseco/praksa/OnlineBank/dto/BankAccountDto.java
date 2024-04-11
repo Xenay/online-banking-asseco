@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 
 public class BankAccountDto {
 
+
     private String name;
     private String type;
     private BigDecimal minimumBalance;
-    private Long accountId; // Use this field to capture account_id from the payload
+    private Long accountId;
+    private String IBAN;
 
     public String getName() {
         return name;
@@ -42,4 +44,14 @@ public class BankAccountDto {
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
+    public String getIBAN() {
+        return IBAN;
+    }
+
+    public void setIBAN(String IBAN) {
+        this.IBAN = IBAN;
+    }
+
+
+
 }

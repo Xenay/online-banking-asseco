@@ -15,6 +15,9 @@ public class PaymentOrder {
     @Column(name = "recipient_name")
     private String recipientName;
 
+    @Column(name = "sender_iban")
+    private String senderIban;
+
     @Column(name = "recipient_iban")
     private String recipientIban;
 
@@ -31,13 +34,21 @@ public class PaymentOrder {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account; // Assuming you have an Account entity
 
+
+
+    @JoinColumn(name = "reciever_id", referencedColumnName = "id")
+    private Long reciever; // Assuming you have an Account entity
+
+
+
     // Constructors, Getters, and Setters
     // No-args constructor
     public PaymentOrder() {}
 
     // All-args constructor
-    public PaymentOrder(Long id, String recipientName, String recipientIban, BigDecimal amount, LocalDate transactionDate, String paymentDescription) {
+    public PaymentOrder(Long id,String senderIban, String recipientName, String recipientIban, BigDecimal amount, LocalDate transactionDate, String paymentDescription) {
         this.id = id;
+        this.senderIban = senderIban;
         this.recipientName = recipientName;
         this.recipientIban = recipientIban;
         this.amount = amount;
@@ -102,5 +113,20 @@ public class PaymentOrder {
     public void setAccount(Account account) {
         this.account = account;
     }
+    public String getSenderIban() {
+        return senderIban;
+    }
+
+    public void setSenderIban(String senderIban) {
+        this.senderIban = senderIban;
+    }
+    public Long getRecieverId() {
+        return reciever;
+    }
+
+    public void setRecieverId(Long recieverId) {
+        this.reciever = recieverId;
+    }
+
 }
 

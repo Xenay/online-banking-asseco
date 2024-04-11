@@ -17,8 +17,7 @@ public class Account {
     @Column(nullable = false, unique = true)
     private String accountNumber;
 
-    @Column(nullable = false)
-    private BigDecimal balance; // Changed from int to BigDecimal.
+
 
     @Column(nullable = false)
     private String currency;
@@ -28,7 +27,7 @@ public class Account {
 
     public Account(String accountNumber, BigDecimal balance, String currency, String username) {
         this.accountNumber = accountNumber;
-        this.balance = balance;
+
         this.currency = currency;
         this.username = username;
     }
@@ -51,13 +50,7 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
 
     public String getCurrency() {
         return currency;

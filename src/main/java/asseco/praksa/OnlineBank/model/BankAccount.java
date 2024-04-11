@@ -13,6 +13,7 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name = "name")
     private String name;
 
@@ -38,7 +39,16 @@ public class BankAccount {
         FOREIGN_CURRENCY,
         GIRO
     }
+    @Column(name = "iban",unique = true)
+    private String IBAN;
 
+    public String getIBAN() {
+        return IBAN;
+    }
+
+    public void setIBAN(String IBAN) {
+        this.IBAN = IBAN;
+    }
     public Long getId() {
         return id;
     }

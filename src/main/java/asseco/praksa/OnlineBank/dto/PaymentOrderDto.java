@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class PaymentOrderDto {
 
     private String recipientName;
+    private String senderIban;
     private String recipientIban;
     private BigDecimal amount;
     private String paymentDescription;
@@ -51,5 +52,12 @@ public class PaymentOrderDto {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+    public String getSenderIban() {
+        return senderIban;
+    }
+
+    public void setSenderIban(String senderIban) {
+        this.senderIban = senderIban;
     }
 }

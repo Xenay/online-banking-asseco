@@ -2,10 +2,13 @@ package asseco.praksa.OnlineBank.controllers;
 
 import asseco.praksa.OnlineBank.dto.PaymentOrderDto;
 import asseco.praksa.OnlineBank.model.Account;
+import asseco.praksa.OnlineBank.model.BankAccount;
 import asseco.praksa.OnlineBank.model.PaymentOrder;
 import asseco.praksa.OnlineBank.repositories.AccountRepository;
+import asseco.praksa.OnlineBank.repositories.BankAccountRepository;
 import asseco.praksa.OnlineBank.services.PaymentOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,32 +26,51 @@ public class PaymentOrderController {
     private PaymentOrderService paymentOrderService;
     @Autowired
     private AccountRepository accountRepository;
+    private final BankAccountRepository bankAccountRepository;
 
     private Long extractAccountIdFromPrincipal(Principal principal) {
         // Your logic to extract the accountId from the principal goes here
         // This is placeholder logic and needs to be replaced
         return Long.valueOf(principal.getName());
     }
-    public PaymentOrderController(PaymentOrderService paymentOrderService, AccountRepository accountRepository) {
+    public PaymentOrderController(PaymentOrderService paymentOrderService, AccountRepository accountRepository,
+                                  BankAccountRepository bankAccountRepository) {
         this.paymentOrderService = paymentOrderService;
         this.accountRepository = accountRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
     @PostMapping
     public ResponseEntity<PaymentOrder> createPaymentOrder(@RequestBody PaymentOrderDto paymentOrderDto) {
         Account account = accountRepository.findById(paymentOrderDto.getAccountId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+        BankAccount reciever_bank = bankAccountRepository.findByIBAN(paymentOrderDto.getRecipientIban());
+        System.out.println(reciever_bank.getAccount().getId());
+
+
+
 
         PaymentOrder paymentOrder = new PaymentOrder();
         // Populate the PaymentOrder entity with data from the PaymentOrderDto
+        paymentOrder.setSenderIban(paymentOrderDto.getSenderIban());
         paymentOrder.setRecipientName(paymentOrderDto.getRecipientName());
         paymentOrder.setRecipientIban(paymentOrderDto.getRecipientIban());
         paymentOrder.setAmount(paymentOrderDto.getAmount());
         paymentOrder.setTransactionDate(LocalDate.now()); // Explicitly set it, though this should already be the defaul
         paymentOrder.setPaymentDescription(paymentOrderDto.getPaymentDescription());
         paymentOrder.setAccount(account); // Link the payment order to the account
+        paymentOrder.setRecieverId(reciever_bank.getAccount().getId());
 
         PaymentOrder createdOrder = paymentOrderService.createPaymentOrder(paymentOrder);
         return ResponseEntity.ok(createdOrder);
+    }
+
+    @GetMapping("/filter/by-period")
+    public ResponseEntity<List<PaymentOrder>> filterByPeriod(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam("accountId") Long accountId) {
+        List<PaymentOrder> paymentOrders = paymentOrderService.filterByPeriod(startDate, endDate, accountId);
+        return ResponseEntity.ok(paymentOrders);
     }
 
 }
