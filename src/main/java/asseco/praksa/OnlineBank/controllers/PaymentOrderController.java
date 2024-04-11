@@ -15,9 +15,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/payment-orders")
@@ -59,7 +61,7 @@ public class PaymentOrderController {
         paymentOrder.setPaymentDescription(paymentOrderDto.getPaymentDescription());
         paymentOrder.setAccount(account); // Link the payment order to the account
         paymentOrder.setRecieverId(reciever_bank.getAccount().getId());
-
+        paymentOrder.setPayment_type(paymentOrderDto.getpaymentType());
         PaymentOrder createdOrder = paymentOrderService.createPaymentOrder(paymentOrder);
         return ResponseEntity.ok(createdOrder);
     }
@@ -70,6 +72,30 @@ public class PaymentOrderController {
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam("accountId") Long accountId) {
         List<PaymentOrder> paymentOrders = paymentOrderService.filterByPeriod(startDate, endDate, accountId);
+        return ResponseEntity.ok(paymentOrders);
+    }
+    @GetMapping("/filter/by-type")
+    public ResponseEntity<List<PaymentOrder>> filterByType(
+            @RequestParam("payment_type") String payment_type,
+            @RequestParam("accountId") Long accountId) {
+        List<PaymentOrder> paymentOrders = paymentOrderService.filterByType(payment_type, accountId);
+        return ResponseEntity.ok(paymentOrders);
+    }
+    @GetMapping("/filter/by-sender")
+    public ResponseEntity<List<PaymentOrder>> filterByRecipient(
+            @RequestParam("recipientName") String recipientName) {
+        List<PaymentOrder> paymentOrders = paymentOrderService.filterByRecipient(recipientName);
+        return ResponseEntity.ok(paymentOrders);
+    }
+    @GetMapping("/filter/by-amount")
+    public ResponseEntity<List<PaymentOrder>> filterByAmount(
+            @RequestParam("minAmount") Optional<BigDecimal> minAmount,
+            @RequestParam("maxAmount") Optional<BigDecimal> maxAmount,
+            @RequestParam("accountId") Long accountId) {
+        List<PaymentOrder> paymentOrders = paymentOrderService.filterByAmount(
+                minAmount.orElse(null),
+                maxAmount.orElse(null),
+                accountId);
         return ResponseEntity.ok(paymentOrders);
     }
 

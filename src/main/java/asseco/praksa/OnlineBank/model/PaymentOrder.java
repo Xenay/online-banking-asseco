@@ -39,7 +39,8 @@ public class PaymentOrder {
     @JoinColumn(name = "reciever_id", referencedColumnName = "id")
     private Long reciever; // Assuming you have an Account entity
 
-
+    @Column(name = "payment_type")
+    private String paymentType;
 
     // Constructors, Getters, and Setters
     // No-args constructor
@@ -128,5 +129,20 @@ public class PaymentOrder {
         this.reciever = recieverId;
     }
 
+    public Long getReciever() {
+        return reciever;
+    }
+
+    public void setReciever(Long reciever) {
+        this.reciever = reciever;
+    }
+
+    public String getPaymenType() {
+        return paymentType;
+    }
+
+    public void setPayment_type(String paymenType) {
+        this.paymentType = paymenType;
+    }
 }
 

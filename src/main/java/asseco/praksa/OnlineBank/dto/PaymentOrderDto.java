@@ -11,7 +11,7 @@ public class PaymentOrderDto {
     private BigDecimal amount;
     private String paymentDescription;
     private Long accountId; // This will be used to link the payment order to an Account
-
+    private String paymentType;
     // Getters and setters for all fields
 
     public String getRecipientName() {
@@ -59,5 +59,12 @@ public class PaymentOrderDto {
 
     public void setSenderIban(String senderIban) {
         this.senderIban = senderIban;
+    }
+    public String getpaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 }

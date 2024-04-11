@@ -15,10 +15,11 @@ public interface PaymentOrderRepository extends JpaRepository<PaymentOrder, Long
     List<PaymentOrder> findAllByAccountIdOrRecipientId(Long accountId);
 
     List<PaymentOrder> findByTransactionDateBetweenAndAccountId(LocalDate startDate, LocalDate endDate, Long accountId);
-//    List<PaymentOrder> findByTransactionTypeAndAccountId(String transactionType, Long accountId);
-//    List<PaymentOrder> findBySenderId(Long senderId);
+    List<PaymentOrder> findByPaymentTypeAndAccountId(String paymenType, Long accountId);
+    List<PaymentOrder> findByRecipientName(String recipientName);
 //    List<PaymentOrder> findByRecieverId(Long recieverId);
-//    List<PaymentOrder> findByAmountBetweenAndAccountId(BigDecimal minAmount, BigDecimal maxAmount, Long accountId);
+    List<PaymentOrder> findByAmountBetweenAndAccountId(BigDecimal minAmount, BigDecimal maxAmount, Long accountId);
+
 
 
 

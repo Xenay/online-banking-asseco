@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -60,7 +61,22 @@ public class PaymentOrderService {
 //
            return paymentOrderRepository.findAllByAccountIdOrRecipientId(accountId);
         }
+    }
+    public List<PaymentOrder> filterByType(String payment_type, Long accountId) {
+        return paymentOrderRepository.findByPaymentTypeAndAccountId(payment_type, accountId);
+    }
+    public List<PaymentOrder> filterByRecipient(String recepientName) {
+        return paymentOrderRepository.findByRecipientName(recepientName);
+    }
+    public List<PaymentOrder> filterByAmount(BigDecimal minAmount, BigDecimal maxAmount, Long accountId) {
+        // Define default values for comparison to handle when only one value is provided
+        BigDecimal defaultMinAmount = BigDecimal.valueOf(Long.MIN_VALUE);
+        BigDecimal defaultMaxAmount = BigDecimal.valueOf(Long.MAX_VALUE);
 
+        // Use the provided values or default to the entire range if null
+        minAmount = (minAmount != null) ? minAmount : defaultMinAmount;
+        maxAmount = (maxAmount != null) ? maxAmount : defaultMaxAmount;
 
+        return paymentOrderRepository.findByAmountBetweenAndAccountId(minAmount, maxAmount, accountId);
     }
 }

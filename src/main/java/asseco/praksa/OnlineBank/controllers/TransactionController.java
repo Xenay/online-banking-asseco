@@ -25,7 +25,7 @@ public class TransactionController {
         return ResponseEntity.ok(paymentOrderService.getAllTransactions());
     }
 
-    @RequestMapping()
+    @RequestMapping("/user")
     @GetMapping
     public ResponseEntity<List<PaymentOrder>> findAllByAccountIdOrRecipientId(@RequestParam("accountId") Long accountId ) {
 
