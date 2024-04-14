@@ -42,7 +42,7 @@ public class PaymentOrderController {
         this.bankAccountRepository = bankAccountRepository;
     }
     @PostMapping
-    public ResponseEntity<PaymentOrder> createPaymentOrder(@RequestBody PaymentOrderDto paymentOrderDto) {
+    public ResponseEntity<PaymentOrder> createPaymentOrder(@RequestBody PaymentOrderDto paymentOrderDto) throws Exception {
         Account account = accountRepository.findById(paymentOrderDto.getAccountId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         BankAccount reciever_bank = bankAccountRepository.findByIBAN(paymentOrderDto.getRecipientIban());

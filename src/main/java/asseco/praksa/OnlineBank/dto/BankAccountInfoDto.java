@@ -1,7 +1,9 @@
 package asseco.praksa.OnlineBank.dto;
 
 
+import asseco.praksa.OnlineBank.auth.EncryptionUtil;
 import asseco.praksa.OnlineBank.model.BankAccount;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 
 import java.math.BigDecimal;
 
@@ -11,6 +13,7 @@ public class BankAccountInfoDto {
     private String name;
     private BigDecimal balance;
     private String type;
+    private static TextEncryptor encryptor;
 
 
 
@@ -42,6 +45,7 @@ public class BankAccountInfoDto {
     }
 
     public String getName() {
+
         return name;
     }
 

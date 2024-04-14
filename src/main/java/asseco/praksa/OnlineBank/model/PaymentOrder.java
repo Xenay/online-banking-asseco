@@ -1,6 +1,11 @@
 package asseco.praksa.OnlineBank.model;
 
+import asseco.praksa.OnlineBank.auth.EncryptionUtil;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.crypto.keygen.KeyGenerators;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -42,6 +47,7 @@ public class PaymentOrder {
     @Column(name = "payment_type")
     private String paymentType;
 
+
     // Constructors, Getters, and Setters
     // No-args constructor
     public PaymentOrder() {}
@@ -69,19 +75,20 @@ public class PaymentOrder {
     }
 
     public String getRecipientName() {
-        return recipientName;
+        return EncryptionUtil.decrypt(recipientName);
     }
 
     public void setRecipientName(String recipientName) {
-        this.recipientName = recipientName;
+        this.recipientName = EncryptionUtil.encrypt(recipientName);
     }
 
     public String getRecipientIban() {
-        return recipientIban;
+        return EncryptionUtil.decrypt(recipientIban);
     }
 
+
     public void setRecipientIban(String recipientIban) {
-        this.recipientIban = recipientIban;
+        this.recipientIban = EncryptionUtil.encrypt(recipientIban);
     }
 
     public BigDecimal getAmount() {
@@ -101,11 +108,11 @@ public class PaymentOrder {
     }
 
     public String getPaymentDescription() {
-        return paymentDescription;
+        return EncryptionUtil.decrypt(paymentDescription);
     }
 
     public void setPaymentDescription(String paymentDescription) {
-        this.paymentDescription = paymentDescription;
+        this.paymentDescription = EncryptionUtil.encrypt(paymentDescription);
     }
     public Account getAccount() {
         return account;
