@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/bank-accounts")
 public class UserController {
-
     @Autowired
     private BankAccountService bankAccountService;
     @Autowired
@@ -50,23 +49,10 @@ public class UserController {
      * @return the ID of the user associated with the username or null if the username does not correspond to a valid user.
      */
     public Long getCurrentUserId(String username) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println("Authentication: " + authentication);
-
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            Object principal = authentication.getPrincipal();
-//            System.out.println("Principal class: " + principal.getClass().getName());
-//
-//            if (principal instanceof UserDetails) {
-//                return ((CustomUserDetails) principal).getId();
-//            }
-//        }
-
-        ;
         System.out.println("Username: " + username);
         Account account = accountRepository.findByUsername(username);
         System.out.println("Account: " + account);
         return account != null ? account.getId() : null;
     }
-    }
+}
 

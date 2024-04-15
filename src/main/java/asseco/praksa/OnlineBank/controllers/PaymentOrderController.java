@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -60,11 +59,11 @@ public class PaymentOrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
 
         // Attempt to retrieve the receiver's bank account
-        BankAccount reciever_bank = bankAccountRepository.findByIBAN(paymentOrderDto.getRecipientIban());
-        if (reciever_bank == null || reciever_bank.getAccount() == null) {
+        BankAccount recieverBank = bankAccountRepository.findByIBAN(paymentOrderDto.getRecipientIban());
+        if (recieverBank == null || recieverBank.getAccount() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid recipient IBAN");
         }
-        System.out.println(reciever_bank.getAccount().getId());
+        System.out.println(recieverBank.getAccount().getId());
 
         // Create and populate the PaymentOrder entity
         PaymentOrder paymentOrder = new PaymentOrder();
@@ -77,8 +76,8 @@ public class PaymentOrderController {
         paymentOrder.setTransactionDate(LocalDate.now()); // Explicitly set it, though this should already be the defaul
         paymentOrder.setPaymentDescription(paymentOrderDto.getPaymentDescription());
         paymentOrder.setAccount(account); // Link the payment order to the account
-        paymentOrder.setRecieverId(reciever_bank.getAccount().getId());
-        paymentOrder.setPayment_type(paymentOrderDto.getpaymentType());
+        paymentOrder.setRecieverId(recieverBank.getAccount().getId());
+        paymentOrder.setPaymentType(paymentOrderDto.getpaymentType());
 
         // Create the payment order using the service
         PaymentOrder createdOrder = paymentOrderService.createPaymentOrder(paymentOrder);

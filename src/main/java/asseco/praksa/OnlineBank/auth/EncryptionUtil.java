@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EncryptionUtil {
-
     @Value("${app.secretKey}")
     private String password;
 
@@ -18,7 +17,6 @@ public class EncryptionUtil {
 
     @PostConstruct
     private void init() {
-        // Ensure this is correctly configured; consider logging the values to debug
         this.encryptor = Encryptors.text(password, salt);
     }
 

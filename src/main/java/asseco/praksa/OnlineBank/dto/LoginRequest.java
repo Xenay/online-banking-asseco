@@ -9,7 +9,6 @@ public class LoginRequest {
     }
 
     public LoginRequest(String username, String password) {
-        System.out.println("request");
         this.username = username;
         this.password = password;
     }

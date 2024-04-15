@@ -23,7 +23,6 @@ import java.util.Optional;
  */
 @RestController
 public class AccountController {
-
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -31,7 +30,7 @@ public class AccountController {
 
     /**
      * Retrieves the details of an account by its ID.
-     * Currently hardcoded to retrieve account with ID 1.
+     * Currently, hardcoded to retrieve account with ID 1.
      *
      * @return a {@link ResponseEntity} containing the {@link Account} details if found,
      *         otherwise returns a not found response.

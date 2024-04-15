@@ -9,14 +9,12 @@ import asseco.praksa.OnlineBank.repositories.AccountRepository;
 import asseco.praksa.OnlineBank.repositories.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class BankAccountService {
-
     @Autowired
     private BankAccountRepository bankAccountRepository;
     @Autowired
@@ -27,7 +25,6 @@ public class BankAccountService {
                 .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + bankAccountDto.getAccountId()));
 
         BankAccount bankAccount = new BankAccount();
-
         bankAccount.setName(bankAccountDto.getName());
         bankAccount.setType(BankAccount.AccountType.valueOf(bankAccountDto.getType()));
         bankAccount.setMinimumBalance(bankAccountDto.getMinimumBalance());
@@ -63,10 +60,8 @@ public class BankAccountService {
         fromAccount.setBalance(fromAccount.getBalance().subtract(transferDto.getAmount()));
         toAccount.setBalance(toAccount.getBalance().add(transferDto.getAmount()));
 
-        // Update accounts
         bankAccountRepository.save(fromAccount);
         bankAccountRepository.save(toAccount);
 
-        // Record transaction (implement this according to your application's requirements)
     }
 }

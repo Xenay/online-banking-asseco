@@ -1,21 +1,14 @@
 package asseco.praksa.OnlineBank.security;
 
-import asseco.praksa.OnlineBank.controllers.LoginController;
 import io.jsonwebtoken.*;
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
-
-
 
 @Component
 public class JwtTokenProvider {
-
     @Value("${app.jwtSecret}")
     private String jwtSecret;
 
@@ -53,8 +46,7 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            // Log the exception
+            return false;
         }
-        return false;
     }
 }

@@ -3,8 +3,6 @@ package asseco.praksa.OnlineBank.dto;
 import java.math.BigDecimal;
 
 public class BankAccountDto {
-
-
     private String name;
     private String type;
     private BigDecimal minimumBalance;
@@ -20,7 +18,6 @@ public class BankAccountDto {
     }
 
     // Getters and setters
-
     public String getType() {
         return type;
     }
