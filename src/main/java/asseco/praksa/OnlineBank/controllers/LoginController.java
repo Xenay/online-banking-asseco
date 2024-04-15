@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+/**
+ * Controller responsible for handling login requests.
+ */
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -34,7 +37,12 @@ public class LoginController {
         this.authenticationManager = authenticationManager;
     }
 
-
+    /**
+     * Processes login requests by authenticating credentials and returning a JWT upon success.
+     *
+     * @param loginRequest the login credentials provided by the user, encapsulated in {@link LoginRequest}
+     * @return a {@link ResponseEntity} with a JWT if authentication is successful, or an error message if not.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {

@@ -15,13 +15,22 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller to handle authentication requests such as login.
+ */
 @RestController
 public class AuthenticationController {
 
     @Autowired
     private AccountService accountService;
 
-
+    /**
+     * Authenticates a user based on username and password provided through a login request.
+     *
+     * @param loginRequest the credentials provided by the user for authentication
+     * @return a {@link ResponseEntity} with user details if authentication is successful,
+     *         or an error message if authentication fails.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Account user = accountService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());

@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.InputStream;
 import java.util.Optional;
 
+/**
+ * Controller responsible for managing account-related operations such as retrieving account details
+ * and registering new accounts.
+ */
 @RestController
 public class AccountController {
 
@@ -25,6 +29,13 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Retrieves the details of an account by its ID.
+     * Currently hardcoded to retrieve account with ID 1.
+     *
+     * @return a {@link ResponseEntity} containing the {@link Account} details if found,
+     *         otherwise returns a not found response.
+     */
     @GetMapping("/api/account")
     public ResponseEntity<Account> getAccountDetails() {
         Optional<Account> account = accountRepository.findById(1L); // Example: get the account with ID 1
@@ -32,6 +43,13 @@ public class AccountController {
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * Retrieves the details of an account by its account number.
+     *
+     * @param accountNumber the account number used to identify the account.
+     * @return a {@link ResponseEntity} containing the {@link Account} details if found,
+     *         otherwise returns a not found response.
+     */
     @GetMapping("/api/accountByAccountNumber")
     public ResponseEntity<Account> getAccountDetailsByAccountNumber(@RequestBody String accountNumber) {
         Optional<Account> account = accountRepository.findByAccountNumber(accountNumber); // Example: get the account with account number
@@ -39,7 +57,13 @@ public class AccountController {
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    /**
+     * Registers a new user based on the provided registration information.
+     *
+     * @param registrationRequest the registration details provided by the prospective user
+     * @return a {@link ResponseEntity} containing a success message with the user ID if registration is successful,
+     *         or an error message if registration fails.
+     */
     @PostMapping("/api/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest) {
         try {

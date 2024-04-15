@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller to manage user bank account interactions.
+ */
 @RestController
 @RequestMapping("/api/user/bank-accounts")
 public class UserController {
@@ -21,6 +24,14 @@ public class UserController {
     @Autowired
     private AccountRepository accountRepository;
 
+    /**
+     * Retrieves bank account details associated with a given username.
+     *
+     * @param username the username to identify the user whose bank accounts are to be retrieved.
+     * @return a {@link ResponseEntity} containing a list of {@link BankAccountInfoDto},
+     *         representing the bank accounts associated with the user. Returns an empty list
+     *         if no accounts are found or the username is not associated with any user.
+     */
     @GetMapping
     public ResponseEntity<List<BankAccountInfoDto>> getBankAccountsForCurrentUser(@RequestParam String username) {
         // Assuming you have a way to get the current user's ID
@@ -31,6 +42,13 @@ public class UserController {
         return ResponseEntity.ok(accounts);
     }
 
+    /**
+     * Extracts the user ID from the provided username.
+     * This method is a stub and requires proper implementation to fetch actual user ID based on authentication context.
+     *
+     * @param username the username of the user whose ID needs to be extracted.
+     * @return the ID of the user associated with the username or null if the username does not correspond to a valid user.
+     */
     public Long getCurrentUserId(String username) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        System.out.println("Authentication: " + authentication);
