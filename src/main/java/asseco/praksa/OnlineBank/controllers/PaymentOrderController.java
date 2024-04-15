@@ -46,6 +46,9 @@ public class PaymentOrderController {
         Account account = accountRepository.findById(paymentOrderDto.getAccountId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         BankAccount reciever_bank = bankAccountRepository.findByIBAN(paymentOrderDto.getRecipientIban());
+        if (reciever_bank == null || reciever_bank.getAccount() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid recipient IBAN");
+        }
         System.out.println(reciever_bank.getAccount().getId());
 
 

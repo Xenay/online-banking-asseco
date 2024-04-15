@@ -35,6 +35,10 @@ public class BankAccountInfoDto {
         this.IBAN = IBAN;
     }
 
+    public BankAccountInfoDto() {
+
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

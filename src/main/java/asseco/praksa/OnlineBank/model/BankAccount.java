@@ -42,6 +42,8 @@ public class BankAccount {
     @Column(name = "iban",unique = true)
     private String IBAN;
 
+    public BankAccount() {
+    }
     public String getIBAN() {
         return IBAN;
     }
