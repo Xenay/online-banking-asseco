@@ -1,26 +1,72 @@
 package asseco.praksa.OnlineBank.controllers;
 
 import asseco.praksa.OnlineBank.dto.LoginRequest;
+import asseco.praksa.OnlineBank.security.JwtTokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+
+/**
+ * Controller responsible for handling login requests.
+ */
 @RestController
 @RequestMapping("/api")
 public class LoginController {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    @Autowired
+    private  JwtTokenProvider tokenProvider;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
+
+    public LoginController(JwtTokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+        this.tokenProvider = tokenProvider;
+        this.authenticationManager = authenticationManager;
+    }
+
+    /**
+     * Processes login requests by authenticating credentials and returning a JWT upon success.
+     *
+     * @param loginRequest the login credentials provided by the user, encapsulated in {@link LoginRequest}
+     * @return a {@link ResponseEntity} with a JWT if authentication is successful, or an error message if not.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        // Hardcoded username and password for demonstration purposes
-        System.out.println("login");
-        String hardcodedUsername = "admin";
-        String hardcodedPassword = "password";
+        try {
+            logger.info("Attempt to login with username: {}", loginRequest.getUsername());
+            logger.info("Attempt to login with username: {}", loginRequest.getPassword());
 
-        if (hardcodedUsername.equals(loginRequest.getUsername()) &&
-                hardcodedPassword.equals(loginRequest.getPassword())) {
-            return ResponseEntity.ok().body("Login successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            Authentication authentication;
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            logger.info("Ataaaaaaae: {}", loginRequest.getUsername());
+
+            String jwt = tokenProvider.generateToken(authentication);
+            logger.info("Login successful for username: {}", loginRequest.getUsername());
+
+            return ResponseEntity.ok(Collections.singletonMap("token", jwt));
+        } catch (BadCredentialsException e) {
+            logger.warn("Login attempt failed for username: {}", loginRequest.getUsername());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "Invalid username or password"));
+        } catch (Exception e) {
+            logger.error("An error occurred during the login process for username: {}", loginRequest.getUsername(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "An error occurred during authentication"));
         }
     }
 }

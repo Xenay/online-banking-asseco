@@ -1,4 +1,6 @@
-package asseco.praksa.OnlineBank;
+package asseco.praksa.OnlineBank.controllers;
+
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
