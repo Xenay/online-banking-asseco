@@ -3,8 +3,6 @@ package asseco.praksa.OnlineBank.dto;
 import java.math.BigDecimal;
 
 public class TransferDto {
-
-
     private Long fromAccountId;
     private Long toAccountId;
     private BigDecimal amount;
@@ -41,5 +39,4 @@ public class TransferDto {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

@@ -9,14 +9,9 @@ import java.math.BigDecimal;
 
 public class BankAccountInfoDto {
     private Long id;
-
     private String name;
     private BigDecimal balance;
     private String type;
-    private static TextEncryptor encryptor;
-
-
-
     private String IBAN;
     // Constructor
     public BankAccountInfoDto(Long id, String name, BigDecimal balance, String type, String IBAN) {
@@ -36,7 +31,6 @@ public class BankAccountInfoDto {
     }
 
     public BankAccountInfoDto() {
-
     }
 
     // Getters and Setters
@@ -48,10 +42,7 @@ public class BankAccountInfoDto {
         this.id = id;
     }
 
-    public String getName() {
-
-        return name;
-    }
+    public String getName() {return name;}
 
     public void setName(String name) {
         this.name = name;
@@ -72,6 +63,7 @@ public class BankAccountInfoDto {
     public void setType(String type) {
         this.type = type;
     }
+
     public String getIBAN() {
         return IBAN;
     }

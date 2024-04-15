@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
-
     @Autowired
     private PaymentOrderService paymentOrderService;
 
@@ -45,7 +44,6 @@ public class TransactionController {
     @RequestMapping("/user")
     @GetMapping
     public ResponseEntity<List<PaymentOrder>> findAllByAccountIdOrRecipientId(@RequestParam("accountId") Long accountId ) {
-
         return ResponseEntity.ok(paymentOrderService.getAllTransactionsById(accountId));
     }
 }

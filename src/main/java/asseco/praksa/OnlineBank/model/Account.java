@@ -17,23 +17,18 @@ public class Account {
     @Column(nullable = false, unique = true)
     private String accountNumber;
 
-
-
     @Column(nullable = false)
     private String currency;
 
     // Constructors
     public Account() {}
 
-    public Account(String accountNumber, BigDecimal balance, String currency, String username) {
+    public Account(String accountNumber, String currency, String username) {
         this.accountNumber = accountNumber;
-
         this.currency = currency;
         this.username = username;
     }
-
     // Getters and setters
-    // Note: You'll need to update the balance's getter and setter to handle BigDecimal.
     public Long getId() {
         return id;
     }

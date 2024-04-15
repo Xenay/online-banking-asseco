@@ -8,11 +8,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "bank_accounts")
 public class BankAccount {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @Column(name = "name")
     private String name;
@@ -23,7 +21,6 @@ public class BankAccount {
 
     @Column(name = "minimum_balance")
     private BigDecimal minimumBalance;
-
 
     // Link to the User entity (assuming you have one)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,6 +48,7 @@ public class BankAccount {
     public void setIBAN(String IBAN) {
         this.IBAN = IBAN;
     }
+
     public Long getId() {
         return id;
     }

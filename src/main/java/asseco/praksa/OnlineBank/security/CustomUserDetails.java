@@ -3,14 +3,12 @@ package asseco.praksa.OnlineBank.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.Collections; // Import for an empty collection of GrantedAuthority
+import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
-
     private Long id;
     private String username;
     private String password;
-    // Other fields as necessary
 
     // Constructor
     public CustomUserDetails(Long id, String username, String password) {

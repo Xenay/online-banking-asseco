@@ -10,7 +10,6 @@ import java.util.List;
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
     @Query("SELECT b FROM BankAccount b WHERE b.account.id = :accountId")
     List<BankAccount> findByAccountId(@Param("accountId") Long accountId);
-
     @Query("SELECT b FROM BankAccount b WHERE b.IBAN = :iban")
     BankAccount findByIBAN(@Param("iban") String iban);
 }

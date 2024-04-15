@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Random;
 
 @Service
@@ -26,7 +25,6 @@ public class AccountService {
         }
         return null;
     }
-
     public Account registerUser(RegistrationRequest registrationRequest) {
         Account newAccount = new Account();
         newAccount.setUsername(registrationRequest.getUsername());

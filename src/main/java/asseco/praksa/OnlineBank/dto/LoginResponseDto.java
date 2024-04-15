@@ -2,7 +2,6 @@ package asseco.praksa.OnlineBank.dto;
 
 import org.springframework.http.ResponseEntity;
 
-// Example DTO for the response
 public class LoginResponseDto {
     private String message;
     private String token;

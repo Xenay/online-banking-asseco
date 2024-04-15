@@ -25,7 +25,6 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api")
 public class LoginController {
-
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private  JwtTokenProvider tokenProvider;

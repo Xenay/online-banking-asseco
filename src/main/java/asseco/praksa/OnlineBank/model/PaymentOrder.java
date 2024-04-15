@@ -2,9 +2,6 @@ package asseco.praksa.OnlineBank.model;
 
 import asseco.praksa.OnlineBank.auth.EncryptionUtil;
 import jakarta.persistence.*;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +9,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "payment_orders")
 public class PaymentOrder {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,8 +35,6 @@ public class PaymentOrder {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account; // Assuming you have an Account entity
 
-
-
     @JoinColumn(name = "reciever_id", referencedColumnName = "id")
     private Long reciever; // Assuming you have an Account entity
 
@@ -49,11 +43,10 @@ public class PaymentOrder {
 
 
     // Constructors, Getters, and Setters
-    // No-args constructor
     public PaymentOrder() {}
 
     // All-args constructor
-    public PaymentOrder(Long id,String senderIban, String recipientName, String recipientIban, BigDecimal amount, LocalDate transactionDate, String paymentDescription) {
+    public PaymentOrder(Long id, String senderIban, String recipientName, String recipientIban, BigDecimal amount, LocalDate transactionDate, String paymentDescription) {
         this.id = id;
         this.senderIban = senderIban;
         this.recipientName = recipientName;
@@ -61,8 +54,6 @@ public class PaymentOrder {
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.paymentDescription = paymentDescription;
-
-
     }
 
     // Getters and setters
@@ -148,7 +139,7 @@ public class PaymentOrder {
         return paymentType;
     }
 
-    public void setPayment_type(String paymenType) {
+    public void setPaymentType(String paymenType) {
         this.paymentType = paymenType;
     }
 }
